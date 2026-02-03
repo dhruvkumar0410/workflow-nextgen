@@ -1,0 +1,286 @@
+/* --- Cards --- */
+.booking-card {
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.16);
+
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.tag {
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-left: 8px;
+}
+
+.tag-transit {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.tag-priority {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.tag-sucess {
+    background: rgba(53, 138, 120, 0.10);
+    color: #358A78;
+}
+
+.tag-pending {
+    background: rgba(175, 126, 47, 0.10);;
+    color: #AF7E2F;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 16px
+}
+
+.grid-item span {
+    display: flex;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 2px;
+    gap: 8px;
+    align-items: center;
+}
+
+.grid-item p {
+    font-size: 14px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 28px;
+    color: var(--text-primary);
+}
+
+.grid-item .material-symbols-outlined {
+    font-size: 20px;
+    color: var(--text-secondary);
+}
+
+/* --- Quick Filters Section --- */
+.quick-filters {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.star-icon {
+    color: var(--primary-blue);
+    font-size: 20px;
+}
+
+.filter-label {
+    color: var(--text-primary);
+    font-size: 14px;
+}
+
+.chip {
+    background: var(--nav-active);
+    color: var(--primary-blue);
+    padding: 4px 8px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(21, 94, 251, 0.20);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+.close-chip {
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.add-filter-btn {
+    background: none;
+    border: none;
+    color: var(--primary-blue);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+/* --- Action Bar Section --- */
+.action-bar {
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.search-container {
+    flex-grow: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    color: var(--text-secondary);
+}
+
+.search-container input {
+    width: 100%;
+    padding: 10px 10px 10px 40px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background-color: var(--backgroud-fa);
+}
+
+.dropdown-group {
+    display: flex;
+    gap: 8px;
+}
+
+.br-btn {
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    padding: 8px 12px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.bottom-section {
+    padding: 16px;
+}
+
+.bk-section h3 {
+    color: var(--text-primary);
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.bk-section p {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.bk-section {
+    margin-bottom: 16px;
+}
+
+.card-header strong {
+    font-size: 16px;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.pr-heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.pr-heading span {
+    color: var(--text-primary);
+}
+
+.pagi-section p {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.pagi-section p span{
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.pagi-section{
+    margin-bottom: 16px;
+}
+
+.booking-card-list {
+    height: calc(100vh - 313px);
+    overflow: auto;
+}
+
+/* input[type='checkbox']{
+    width: 20px;
+    height: 20px;
+    background-image: url(../img/cu-checkbox.svg);
+    background-position: -24px center;
+} */
+
+.dropdown { 
+    position: relative;
+}
+
+.dropdown .checklist {
+    border-radius: 8px;
+    position: absolute;
+    list-style: none;
+    background-color: var(--white);
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+}
+
+.dropdown .checklist li {
+    padding: 8px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    gap: 8px;
+}
+
+.dropdown .checklist li:last-child {
+    border: none;
+}
+
+.dropdown .checklist li label {
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.dropdown .checklist li:hover {
+    background-color: #f1f5f9;
+}
+
+.dropdown .checklist li:first-child {
+    border-radius: 8px 8px 0px 0px;
+}
+
+.dropdown .checklist li:last-child {
+    border-radius: 0px 0px 8px 8px ;
+}
+
+input:focus-visible {
+    outline: #155EFB;
+}

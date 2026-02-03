@@ -1,0 +1,7 @@
+/* --- Main Content --- */
+.main-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    flex: 1 1 auto;        /* OR simply: flex: 1 */
+    min-width: 0;
+}

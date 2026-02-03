@@ -1,12 +1,18 @@
 {
   "name": "workflow-nextgen",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "start": "ng serve -c=local --port=4200",
+    "build": "ng build --output-hashing=all --base-href ./ -c=local",
+    "watch": "ng build --watch --configuration local",
+    "test": "ng test",
+    "start:alpha": "ng serve -c=alpha --port=4200",
+    "start:beta": "ng serve -c=beta --port=4200",
+    "start:production": "ng serve -c=production --port=4200",
+    "build:alpha": "ng build --output-hashing=all --base-href ./ -c=alpha",
+    "build:beta": "ng build --output-hashing=all --base-href ./ -c=beta",
+    "build:production": "ng build --output-hashing=all --base-href ./ -c=production"
   },
   "prettier": {
     "printWidth": 100,
@@ -23,14 +29,19 @@
   "private": true,
   "packageManager": "npm@11.8.0",
   "dependencies": {
+    "@angular/animations": "^21.1.2",
+    "@angular/cdk": "^21.1.2",
     "@angular/common": "^21.1.0",
     "@angular/compiler": "^21.1.0",
     "@angular/core": "^21.1.0",
     "@angular/forms": "^21.1.0",
     "@angular/platform-browser": "^21.1.0",
     "@angular/router": "^21.1.0",
+    "@ngx-translate/core": "^16.0.4",
+    "@ngx-translate/http-loader": "^8.0.0",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "zone.js": "^0.16.0"
   },
   "devDependencies": {
     "@angular/build": "^21.1.2",

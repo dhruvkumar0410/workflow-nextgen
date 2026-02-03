@@ -1,0 +1,64 @@
+<aside id="sidebar" class="sidebar" [ngClass]="{ 'collapsed': collapseSidebar }">
+    <div class="sidebar-header">
+        <div class="logo-box">
+            <span class="logo-icon">
+                <img src="assets/logo.svg" alt="WorkFlow">
+            </span>
+            <div class="logo-txt">
+                <h1>{{ 'appName' | translate }}</h1>
+                <p>{{ 'appSubName' | translate }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="nav-section">
+        <p class="section-label">Operations</p>
+        <a href="#" class="nav-item active">
+            <span class="material-symbols-outlined">package_2</span>
+            Shipment Booking
+            <span class="badge">247</span>
+            <span class="material-symbols-outlined color-sec">keyboard_arrow_up</span>
+        </a>
+        <div class="sub-menu">
+            <a href="#" class="sub-item">Pickup <span class="badge">45</span></a>
+            <a href="#" class="sub-item active">In Transit <span class="badge">132</span></a>
+            <a href="#" class="sub-item">Delivered <span class="badge">58</span></a>
+        </div>
+        <a href="#" class="nav-item">
+            <span class="material-symbols-outlined">local_shipping</span>
+            Shipment Ops
+            <span class="badge">89</span>
+            <span class="material-symbols-outlined color-sec">
+                keyboard_arrow_down
+            </span>
+        </a>
+        <a href="#" class="nav-item">
+            <span class="material-symbols-outlined">receipt</span>
+            Invoicing
+        </a>
+        <a href="#" class="nav-item">
+            <span class="material-symbols-outlined">credit_card</span>
+            Payment
+        </a>
+    </div>
+    <div class="nav-section" style="border: none;">
+        <p class="section-label">Management</p>
+        <a href="#" class="nav-item">
+            <span class="material-symbols-outlined">group</span>
+            Customer Management
+        </a>
+        <a href="#" class="nav-item">
+            <span class="material-symbols-outlined">dashboard</span>
+            Dashboards
+                <span class="material-symbols-outlined mrlft">
+                keyboard_arrow_down
+            </span>
+        </a>
+    </div>
+    <div class="user-footer">
+        <img src="https://i.pravatar.cc/150?u=shrey" class="avatar" alt="User">
+        <div class="user-details">
+            <span class="user-name">Shrey Sharma</span>
+            <span class="user-email">shrey&#64;gmail.in</span>
+        </div>
+    </div>
+</aside>
