@@ -14,7 +14,10 @@
     "importHelpers": true,
     "target": "es2022",
     "module": "preserve",
-    "lib": ["es2022", "dom"]
+    "lib": ["es2022", "dom"],
+    "paths": {
+      "@environment": ["./src/environments/environment.ts"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

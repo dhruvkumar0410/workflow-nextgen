@@ -1,6 +1,7 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, importProvidersFrom } from '@angular/core';
-import { provideHttpClient, HttpClient } from '@angular/common/http';
+import { ApplicationConfig, provideBrowserGlobalErrorListeners, importProvidersFrom, APP_INITIALIZER, provideAppInitializer, inject } from '@angular/core';
+import { provideHttpClient, HttpClient, HTTP_INTERCEPTORS, withInterceptors } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
+import { environment } from "@environment";
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -8,17 +9,20 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { OverlayModule } from '@angular/cdk/overlay';
 
+import { requestInterceptor } from './core/interceptors/interceptor';
+
 import { routes } from './app.routes';
+import { EncryptionService } from './core/encryption/encryption.service';
 
 export function httpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, `${environment.appBaseURL}assets/i18n/`, '.json');
 }
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideAnimations(),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([requestInterceptor])),
     provideRouter(routes),
 
     // CDK providers (Overlay is most common)
@@ -33,6 +37,10 @@ export const appConfig: ApplicationConfig = {
           deps: [HttpClient]
         }
       })
-    )
+    ),
+    provideAppInitializer(() => {
+      const enc = inject(EncryptionService);
+      return enc.init();
+    })
   ]
 };

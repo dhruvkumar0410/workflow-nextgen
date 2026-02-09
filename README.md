@@ -1,6 +1,6 @@
 # Workflow
 
-v1.0.0 (03 FEB 2026)
+v1.1.0 (09 FEB 2026)
 
-> * Initial Commit
+> * Added Code Obfuscator, AuthGuard, HttpInterceptor and Encryption of Request/Response;
 
