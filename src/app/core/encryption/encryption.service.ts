@@ -32,10 +32,10 @@ export class EncryptionService {
   }
   
   encryptString(value: any) {
-    return this.strategy.encrypt(value);
+    return this.strategy.encryptString(value);
   }
 
   decryptString(value: string) {
-    return this.strategy.decrypt(value);
+    return this.strategy.decryptString(value);
   }
 }
