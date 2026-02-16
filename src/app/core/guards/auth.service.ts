@@ -23,6 +23,7 @@ export class AuthService {
   logout() {
     this.utils.removeItemByKey('wmTkn');
     this.utils.removeItemByKey('wmDtls');
+    this.utils.removeItemByKey('wmUsrDtls');
 
     this.callSSO();
   }

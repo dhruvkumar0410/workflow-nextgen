@@ -1,8 +1,7 @@
 ## Workflow
 
-# v1.1.1 (16 FEB 2026)
+# v1.1.2 (16 FEB 2026)
 
-1. SSO Integrated.
-2. Data Stored locally.
-3. Sidebar Dynamic for Processes And Activities.
-4. Multiple functionality written.
+1. Get User Details Api.
+2. Avatar change.
+3. Multiple functionality written.

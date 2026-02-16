@@ -1,17 +1,21 @@
-import { AESEncryptionService } from '../encryption/aes';
 import { Injectable } from '@angular/core';
 import { environment } from '@environment';
+
+import { CustomStrategy, IAPIOptions, RequestType } from '../../core/encryption/custom.strategy';
+
 @Injectable({ providedIn: 'root' })
 export class Utils {
 
     public static get OAK(): string { return environment.secretKey; }
 
-    constructor(private aesStrategy: AESEncryptionService) { }
+    constructor(
+        private customStrategy: CustomStrategy
+    ) { }
 
     async setAccessToken(token: string) {
         if (!token) return;
 
-        const encrypted = await this.aesStrategy.encrypt256(token);
+        const encrypted: any = await this.customStrategy.encryptString(token);
         localStorage.setItem('wmTkn', encrypted);
     }
 
@@ -19,7 +23,7 @@ export class Utils {
         const token = localStorage.getItem('wmTkn');
         if (!token) return null;
 
-        return await this.aesStrategy.decrypt256(token);
+        return await this.customStrategy.decryptString(token);
     }
 
     async setStringByKey(key: any, dtls: any) {
@@ -27,7 +31,7 @@ export class Utils {
             return
         };
 
-        const encrypted = await this.aesStrategy.encrypt256(dtls);
+        const encrypted = await this.customStrategy.encryptString(dtls);
         localStorage.setItem(key, encrypted);
     }
 
@@ -35,7 +39,7 @@ export class Utils {
         const value = localStorage.getItem(key);
         if (!value) return null;
 
-        return await this.aesStrategy.decrypt256(value);
+        return await this.customStrategy.decryptString(value);
     }
 
     async setDetailByKey(key: any, dtls: any) {
@@ -43,7 +47,7 @@ export class Utils {
             return
         };
 
-        const encrypted = await this.aesStrategy.encrypt256(JSON.stringify(dtls));
+        const encrypted = await this.customStrategy.encryptString(JSON.stringify(dtls));
         localStorage.setItem(key, encrypted);
     }
 
@@ -51,7 +55,7 @@ export class Utils {
         const value = localStorage.getItem(key);
         if (!value) return null;
 
-        const returnValue: any = this.aesStrategy.decrypt256(value);
+        const returnValue: any = await this.customStrategy.decryptString(value);
 
         return await JSON.parse(returnValue);
     }
@@ -60,5 +64,11 @@ export class Utils {
         if (key) localStorage.removeItem(key);
     }
 
-    // prepare
+    buildApiOptions(url: string, method: RequestType, body: any = ""): IAPIOptions {
+        return {
+            RequestURL: url,
+            RequestMethod: method,
+            RequestBody: body
+        };
+    }
 }

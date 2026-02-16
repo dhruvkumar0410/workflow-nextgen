@@ -19,9 +19,10 @@ export const environment = {
   secretKey:'62d0e54805b651c76f2aabc2d84256be',
   
   // BASE URLs for Application & APIs
-  appBaseURL: 'http://localhost:4203/',
+  appBaseURL: 'http://localhost:4206/',
   apiBaseUrl: 'http://10.10.21.196:8002/api/workflow/',
   servicePHPURL: 'https://workflow.mappls.com/workflow_admin_proxy/service.php',
+  anchorUrl: 'https://anchor.mapmyindia.com/api/',
 
   // BASE URLs && SSO ACCESS DETAILS
   ssoLoginUrl: 'https://outpost.mappls.com/api/security/v4.0.0/oauth/',

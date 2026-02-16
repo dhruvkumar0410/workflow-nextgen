@@ -2,7 +2,7 @@
     <div class="sidebar-header">
         <div class="logo-box">
             <span class="logo-icon">
-                <img src="assets/logo.svg" alt="WorkFlow">
+                <img src="./assets/logo.svg" alt="WorkFlow">
             </span>
             <div class="logo-txt">
                 <h1>{{ 'appName' | translate }}</h1>
@@ -55,10 +55,10 @@
     </div>
     <div class="user-footer">
         <button (click)="handleLogout();">Logout</button>
-        <img src="assets/user.jpg" class="avatar" alt="User">
+        <img src="./assets/Avatar.png" class="avatar" alt="User">
         <div class="user-details">
-            <span class="user-name">Shrey Sharma</span>
-            <span class="user-email">shrey&#64;gmail.in</span>
+            <span class="user-name">{{userDetails()?.name ?? '-'}}</span>
+            <span class="user-email">{{userDetails()?.email ?? '-'}}</span>
         </div>
     </div>
 </aside>
