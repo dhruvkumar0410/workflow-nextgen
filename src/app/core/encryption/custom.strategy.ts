@@ -55,6 +55,23 @@ export class CustomStrategy implements EncryptionStrategy {
     return returnable;
   }
 
+  async encryptString(value: any) {
+    if (!value) return "";
+
+    return CryptoJS.AES.encrypt(value.trim(), this.key).toString();
+  }
+
+  async decryptString(cipherText: any) {
+    if (!cipherText) return "";
+
+    try {
+      const bytes = CryptoJS.AES.decrypt(cipherText, this.key);
+      return bytes.toString(CryptoJS.enc.Utf8).trim();
+    } catch (error) {
+      return "";
+    }
+  }
+
   parseParameters(parameters: any, requestURL: any) {
     let url = requestURL;
     Object.keys(parameters).forEach((key) => {

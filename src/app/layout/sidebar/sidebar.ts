@@ -1,7 +1,10 @@
-import { AuthService } from './../../core/guards/auth.service';
 import { Component, OnInit, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { TranslatePipe } from '@ngx-translate/core';
+import { Utils } from '../../core/utils/utils';
+
+import { AuthService } from './../../core/guards/auth.service';
 import { SharedService } from '../../shared/services/shared';
 import { Sidebar } from '../../services/sidebar/sidebar';
 
@@ -16,17 +19,29 @@ export class SidebarComponent implements OnInit {
 
   collapseSidebar = signal<boolean>(false);
   userProjDetails = signal<any>([]);
+  userDetails = signal<any>([]);
 
   private authService = inject(AuthService);
   private sharedService = inject(SharedService);
   private sidebarService = inject(Sidebar);
+  private utils = inject(Utils);
 
   ngOnInit() {
     this.sharedService.collapseSidebar$.subscribe((state: boolean) => {
       this.collapseSidebar.set(state);
     });
+    
+    this.initialize();
+  }
 
-    this.getUserProjDetails();
+  async initialize() {
+    await this.loadUserDetails();
+    await this.getUserProjDetails();
+  }
+
+  async loadUserDetails() {
+    const data = await this.utils.getDetailByKey('wmUsrDtls');
+    this.userDetails.set(data);
   }
 
   async getUserProjDetails() {
@@ -34,8 +49,6 @@ export class SidebarComponent implements OnInit {
       const response: any = await this.sidebarService.userHierarchy();
       if (response?.body) {
         this.userProjDetails.set(response.body[0]?.projects[0]?.processes);
-        console.log(this.userProjDetails());
-
       }
     } catch (error) {
       console.error('Failed to fetch user details', error);

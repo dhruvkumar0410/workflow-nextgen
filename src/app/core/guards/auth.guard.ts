@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { environment } from '@environment';
 
-import { Observable } from 'rxjs';
-
-import { AuthService } from './auth.service';
-
 import { IAPIOptions, RequestType } from '../encryption/custom.strategy';
 import { Utils } from '../utils/utils';
+
+import { AuthService } from './auth.service';
+import { Userdetail } from '../../services/user-details/userdetail';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +15,9 @@ export class AuthGuard implements CanActivate {
 
   constructor(
     private router: Router,
+    private utils: Utils,
     private authService: AuthService,
-    private utils: Utils
+    private userDetailService: Userdetail
   ) { }
 
   async canActivate(
@@ -33,7 +33,7 @@ export class AuthGuard implements CanActivate {
     const code = next?.queryParamMap?.get('code');
 
     if (code && code.trim() !== '') {
-      this.fetchUserToken(code);
+      await this.fetchUserToken(code);
       return true;
     } else {
       this.authService.callSSO();
@@ -57,12 +57,24 @@ export class AuthGuard implements CanActivate {
 
     if (response?.status == 200 && response?.body) {
       let body: any = response?.body;
-      this.utils.setAccessToken(body?.access_token);
-      this.utils.setDetailByKey('wmDtls', body);
-
-      this.router.navigate(['/']);
+      await this.utils.setAccessToken(body?.access_token);
+      await this.utils.setDetailByKey('wmDtls', body);
+      await this.getUserDetails();
     } else {
       this.authService.callSSO();
+    }
+  }
+
+  async getUserDetails() {
+    try {
+      const response: any = await this.userDetailService.userDetail();
+
+      if (response?.body) {
+        await this.utils.setDetailByKey('wmUsrDtls', response?.body);
+        this.router.navigate(['/']);
+      }
+    } catch (error) {
+      console.error('Failed to fetch user details', error);
     }
   }
 }
