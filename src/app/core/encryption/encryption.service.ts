@@ -30,4 +30,12 @@ export class EncryptionService {
   decrypt(payload: string) {
     return this.strategy.decrypt(payload);
   }
+  
+  encryptString(value: any) {
+    return this.strategy.encrypt(value);
+  }
+
+  decryptString(value: string) {
+    return this.strategy.decrypt(value);
+  }
 }
