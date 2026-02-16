@@ -4,7 +4,6 @@ import { environment } from '@environment';
 
 import { BehaviorSubject, lastValueFrom } from 'rxjs';
 
-
 @Injectable({ providedIn: 'root' })
 export class SharedService {
 

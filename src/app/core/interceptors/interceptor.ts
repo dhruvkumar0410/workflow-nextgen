@@ -16,13 +16,14 @@ export const requestInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const authService = inject(AuthService);
   const encryptionService = inject(EncryptionService);
+  const utils = inject(Utils);
   
   let modifiedReq = req;
 
   // /* -----------------------------------------
   //   1. Inject Authorization token
   // ----------------------------------------- */
-  const token = Utils.getLocalStorageData("_tkn");
+  const token: any = utils.getAccessToken();
   if (token && (environment.encryptionMethod !== 'CUSTOM'
     || (environment.encryptionMethod === 'CUSTOM'
       && !isIAPIOptions(modifiedReq.body) && !isBypass(modifiedReq)))) {

@@ -6,12 +6,12 @@ import { EncryptionStrategy } from './encryption.strategy';
 
 import { Utils } from "../utils/utils";
 
-@Injectable({providedIn: "root"})
+@Injectable({ providedIn: "root" })
 export class CustomStrategy implements EncryptionStrategy {
 
   private key!: string;
 
-  constructor() {}
+  constructor() { }
 
   async init() {
     this.key = Utils.OAK;
@@ -19,7 +19,7 @@ export class CustomStrategy implements EncryptionStrategy {
 
   async encrypt(data: any): Promise<string> {
     let newURL = "";
-    if(!data) {
+    if (!data) {
       return "";
     }
 
@@ -38,25 +38,25 @@ export class CustomStrategy implements EncryptionStrategy {
       enableEncryption: true
     }
 
-    var cipherPayLoad = CryptoJS.AES.encrypt(JSON.stringify(requestBody).trim(), this.key).toString();
+    let cipherPayLoad = CryptoJS.AES.encrypt(JSON.stringify(requestBody).trim(), this.key).toString();
 
     return cipherPayLoad;
   }
 
   async decrypt(payload: string): Promise<any> {
-    var decryptedResponseBody
+    let decryptedResponseBody
     try {
       decryptedResponseBody = CryptoJS.AES.decrypt(payload, this.key).toString(CryptoJS.enc.Utf8).trim();
-    } catch (Error) {}
+    } catch (error) { }
 
     let returnable = decryptedResponseBody ? this.isJsonString(decryptedResponseBody)
-        ? JSON.parse(decryptedResponseBody) : decryptedResponseBody : '';
+      ? JSON.parse(decryptedResponseBody) : decryptedResponseBody : '';
 
     return returnable;
   }
 
   parseParameters(parameters: any, requestURL: any) {
-    var url = requestURL;
+    let url = requestURL;
     Object.keys(parameters).forEach((key) => {
       url = url.includes("?")
         ? url + "&" + key + "=" + parameters[key]
@@ -65,7 +65,7 @@ export class CustomStrategy implements EncryptionStrategy {
 
     return url;
   }
-  
+
   isJsonString(str: any) {
     try {
       JSON.parse(str);
@@ -77,7 +77,7 @@ export class CustomStrategy implements EncryptionStrategy {
   }
 }
 
-export interface IAPIOptions{
+export interface IAPIOptions {
   RequestURL: string;
   RequestMethod: RequestType;
   Parameters?: { [index: string]: string },
@@ -86,9 +86,9 @@ export interface IAPIOptions{
 }
 
 export enum RequestType {
-  GET ="GET",
+  GET = "GET",
   POST = "POST",
   PUT = "PUT",
   DELETE = "DELETE",
-  PATCH ="PATCH"
+  PATCH = "PATCH"
 }

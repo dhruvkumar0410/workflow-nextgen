@@ -24,6 +24,10 @@ export const environment = {
   servicePHPURL: 'https://workflow.mappls.com/workflow_admin_proxy/service.php',
 
   // BASE URLs && SSO ACCESS DETAILS
-  ssoLoginUrl: '',
-  ssoLoginStaticKey: ''
+  ssoLoginUrl: 'https://outpost.mappls.com/api/security/v4.0.0/oauth/token?grant_type=refresh_token&client_id=',
+  ssoLoginStaticKey: 'Kz3TUIj7YQ',
+
+  // Workflow CI & CS
+  workflowCI: '33OkryzDZsIwX3v4wJX786hK2LZgr6rs4Q3RlFTD4vPhE8jXYz-6LIit8sEFbdZZYHaAFqjX51wsWLiQ20vFsA==',
+  workflowCS: 'lrFxI-iSEg_FgOqxsLkzOcyCAY2G3uSKZlx1umf26Uf5xKmXh4SFwWr1jIkIyU5hmYWD70381K_HD0Mnm6OoeZdQA3LqWnP2'
 };

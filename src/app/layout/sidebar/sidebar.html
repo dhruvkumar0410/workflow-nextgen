@@ -1,4 +1,4 @@
-<aside id="sidebar" class="sidebar" [ngClass]="{ 'collapsed': collapseSidebar }">
+<aside id="sidebar" class="sidebar" [ngClass]="{ 'collapsed': collapseSidebar() }">
     <div class="sidebar-header">
         <div class="logo-box">
             <span class="logo-icon">
@@ -10,51 +10,51 @@
             </div>
         </div>
     </div>
-    <div class="nav-section">
-        <p class="section-label">Operations</p>
-        <a href="#" class="nav-item active">
-            <span class="material-symbols-outlined">package_2</span>
-            Shipment Booking
-            <span class="badge">247</span>
-            <span class="material-symbols-outlined color-sec">keyboard_arrow_up</span>
-        </a>
-        <div class="sub-menu">
-            <a href="#" class="sub-item">Pickup <span class="badge">45</span></a>
-            <a href="#" class="sub-item active">In Transit <span class="badge">132</span></a>
-            <a href="#" class="sub-item">Delivered <span class="badge">58</span></a>
+    <div class="mid-section">
+        <div class="nav-section">
+            <p class="section-label">Operations</p>
+            @for (prcItem of userProjDetails(); track $index) {
+                <a class="nav-item" [class.active]="prcItem.open" (click)="toggleProcess(prcItem)">
+                    <div class="nav-content">
+                        <span class="material-symbols-outlined">package_2</span>
+                        <span>{{prcItem?.process_name ?? '-'}}</span>
+                    </div>
+                    <span class="material-symbols-outlined color-sec">
+                        {{ prcItem.open ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
+                    </span>
+                </a>
+                @if (prcItem.open && prcItem?.activities?.length > 0) {
+                    @for (actItem of prcItem?.activities; track $index) {
+                        <div class="sub-menu">
+                            <a class="sub-item">
+                                {{actItem?.activity_name ?? '-'}}
+                                <span class="badge">{{actItem?.work_item_count}}</span>
+                            </a>
+                        </div>
+                    }
+                }
+            }
         </div>
-        <a href="#" class="nav-item">
-            <span class="material-symbols-outlined">local_shipping</span>
-            Shipment Ops
-            <span class="badge">89</span>
-            <span class="material-symbols-outlined color-sec">
-                keyboard_arrow_down
-            </span>
-        </a>
-        <a href="#" class="nav-item">
-            <span class="material-symbols-outlined">receipt</span>
-            Invoicing
-        </a>
-        <a href="#" class="nav-item">
-            <span class="material-symbols-outlined">credit_card</span>
-            Payment
-        </a>
-    </div>
-    <div class="nav-section" style="border: none;">
-        <p class="section-label">Management</p>
-        <a href="#" class="nav-item">
-            <span class="material-symbols-outlined">group</span>
-            Customer Management
-        </a>
-        <a href="#" class="nav-item">
-            <span class="material-symbols-outlined">dashboard</span>
-            Dashboards
+        <div class="nav-section" style="border: none;">
+            <p class="section-label">Management</p>
+            <a class="nav-item">
+                <span class="material-symbols-outlined">group</span>
+                Customer Management
                 <span class="material-symbols-outlined mrlft">
-                keyboard_arrow_down
-            </span>
-        </a>
+                    keyboard_arrow_down
+                </span>
+            </a>
+            <a class="nav-item">
+                <span class="material-symbols-outlined">dashboard</span>
+                Dashboards
+                <span class="material-symbols-outlined mrlft">
+                    keyboard_arrow_down
+                </span>
+            </a>
+        </div>
     </div>
     <div class="user-footer">
+        <button (click)="handleLogout();">Logout</button>
         <img src="assets/user.jpg" class="avatar" alt="User">
         <div class="user-details">
             <span class="user-name">Shrey Sharma</span>

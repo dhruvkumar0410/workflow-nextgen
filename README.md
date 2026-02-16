@@ -1,6 +1,8 @@
-# Workflow
+## Workflow
 
-v1.1.0 (09 FEB 2026)
+# v1.1.1 (16 FEB 2026)
 
-> * Added Code Obfuscator, AuthGuard, HttpInterceptor and Encryption of Request/Response;
-
+1. SSO Integrated.
+2. Data Stored locally.
+3. Sidebar Dynamic for Processes And Activities.
+4. Multiple functionality written.
