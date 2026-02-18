@@ -1,6 +1,6 @@
 ## Workflow
 
-# v1.1.3 (18 FEB 2026)
+# v1.1.4 (18 FEB 2026)
 
-1. Added 981 process component.
-2. Improvements in functionality & UI.
+1. Dynamic Filters.
+2. One variable login details in local storage.

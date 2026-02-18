@@ -1,19 +1,20 @@
 <div class="bottom-section">
   <div class="bk-section">
-    <h3>{{ 'booking.title' | translate }}</h3>
-    <p>{{ 'booking.description' | translate }}</p>
+    <h3>Booking Records</h3>
+    <p>Manage and track all shipment bookings</p>
   </div>
   <div class="quick-filters">
     <span class="material-symbols-outlined star-icon">grade</span>
     <span class="filter-label">Quick Filters:</span>
-    <div class="chip">
-      In Transit
-      <span class="material-symbols-outlined close-chip">close</span>
-    </div>
-    <div class="chip">
-      High Priority
-      <span class="material-symbols-outlined close-chip">close</span>
-    </div>
+    @for (filter of quickFilters; track filter.type + '-' + filter.label) {
+      <div class="chip">
+        {{ filter.label }}
+        <span class="material-symbols-outlined close-chip"
+          (click)="removeQuickFilter(filter)">
+          close
+        </span>
+      </div>
+    }
     <button class="add-filter-btn">
       <span class="material-symbols-outlined">add</span>
       Add Quick Filter
@@ -26,32 +27,54 @@
     </div>
     <div class="dropdown-group">
       <div class="dropdown">
-        <button class="br-btn" (click)="fltr('status')">
+        <button class="br-btn" (click)="handleFtrDropdown('status')">
           <span class="material-symbols-outlined">filter_alt</span>
           All Status
-          <span class="material-symbols-outlined color-sec">expand_more</span>
+          <span class="material-symbols-outlined color-sec">
+            @if (dropdownType == 'status') {
+              expand_less
+            } @else {
+              expand_more
+            }
+          </span>
         </button>
-        @if (lst_name == 'status') {
+        @if (dropdownType == 'status') {
           <ul class="checklist">
-            <li><input type="checkbox" id="transit" /> <label for="transit">In Transit</label></li>
-            <li><input type="checkbox" id="High" /> <label for="High">High Prority</label></li>
+            @for (status of statusOptions; track status; let idx = $index) {
+              <li>
+                <input type="checkbox" [id]="'status-' + idx" [checked]="isStatusChecked(status)"
+                  (change)="toggleStatus(status, $event)" />
+                <label [for]="'status-' + idx">{{ status }}</label>
+              </li>
+            }
           </ul>
 
-          <div (click)="lst_name = ''" class="overlay"></div>
+          <div (click)="dropdownType = ''" class="overlay"></div>
         }
       </div>
       <div class="dropdown">
-        <button class="br-btn" (click)="fltr('priority')">
+        <button class="br-btn" (click)="handleFtrDropdown('priority')">
           <span class="material-symbols-outlined">filter_alt</span>
           All Priority
-          <span class="material-symbols-outlined color-sec">expand_more</span>
+          <span class="material-symbols-outlined color-sec">
+            @if (dropdownType == 'priority') {
+              expand_less
+            } @else {
+              expand_more
+            }
+          </span>
         </button>
-        @if (lst_name == 'priority') {
+        @if (dropdownType == 'priority') {
           <ul class="checklist">
-            <li><input type="checkbox" id="transit" /> <label for="transit">In Transit</label></li>
-            <li><input type="checkbox" id="High" /> <label for="High">High Prority</label></li>
+            @for (priority of priorityOptions; track priority; let idx = $index) {
+              <li>
+                <input type="checkbox" [id]="'priority-' + idx" [checked]="isPriorityChecked(priority)"
+                  (change)="togglePriority(priority, $event)" />
+                <label [for]="'priority-' + idx">{{ priority }}</label>
+              </li>
+            }
           </ul>
-          <div (click)="lst_name = ''" class="overlay"></div>
+          <div (click)="dropdownType = ''" class="overlay"></div>
         }
       </div>
       <button class="br-btn">
