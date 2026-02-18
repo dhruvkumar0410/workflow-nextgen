@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { EncryptionStrategy } from './encryption.strategy';
-import { SharedService } from '../../shared/services/shared';
 import { lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 

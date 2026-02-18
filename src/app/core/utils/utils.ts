@@ -73,4 +73,17 @@ export class Utils {
             RequestBody: body
         };
     }
+
+    async setRefreshToken(token: string) {
+        if (!token) return;
+        const encrypted: any = await this.encryptionService.encryptString(token);
+        localStorage.setItem('wmRefTkn', encrypted);
+    }
+
+    async getRefreshToken() {
+       const token = localStorage.getItem('wmRefTkn');
+       if (!token) return null;
+
+       return await this.encryptionService.decryptString(token);
+    }
 }

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
 //Components
-import { SharedService } from '../../shared/services/shared';
+import { Shared } from '../../services/shared/shared';
 
 import { HeaderComponent } from '../header/header';
 import { SidebarComponent } from '../sidebar/sidebar';
@@ -24,7 +24,7 @@ export class ShellComponent implements OnInit {
 
   statechecking: boolean = false;
 
-  constructor(private sharedService: SharedService) { }
+  constructor(private sharedService: Shared) { }
 
   ngOnInit() {
     this.sharedService.collapseSidebar$.subscribe((state: boolean) => {

@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 
 //Services
-import { SharedService } from '../../shared/services/shared';
-
+import { Shared } from '../../services/shared/shared';
 @Component({
   standalone: true,
   selector: 'app-header',
@@ -14,7 +13,7 @@ export class HeaderComponent {
 
   collapseSidebar: boolean = false;
 
-  constructor(private sharedService: SharedService) {}
+  constructor(private sharedService: Shared) {}
 
   handleCollapseSidebar() {
     this.collapseSidebar = !this.collapseSidebar;
