@@ -1,6 +1,6 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, importProvidersFrom, APP_INITIALIZER, provideAppInitializer, inject } from '@angular/core';
 import { provideHttpClient, HttpClient, HTTP_INTERCEPTORS, withInterceptors } from '@angular/common/http';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withHashLocation } from '@angular/router';
 import { environment } from "@environment";
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -23,7 +23,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideAnimations(),
     provideHttpClient(withInterceptors([requestInterceptor])),
-    provideRouter(routes),
+    provideRouter(routes, withHashLocation()),
 
     // CDK providers (Overlay is most common)
     importProvidersFrom(OverlayModule),

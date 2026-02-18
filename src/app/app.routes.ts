@@ -9,7 +9,7 @@ export const routes: Routes = [
                 .then(m => m.ShellComponent),
         children: [
             {
-                path: 'process',
+                path: 'process/:process_id',
                 loadComponent: () =>
                     import('./processes/981/981')
                         .then(m => m.Process981),
@@ -19,6 +19,10 @@ export const routes: Routes = [
                 path: '',
                 redirectTo: 'process',
                 pathMatch: 'full'
+            },
+            {
+                path: '**',
+                redirectTo: 'process/981',
             }
         ]
     }
