@@ -1,64 +1,86 @@
-<aside id="sidebar" class="sidebar" [ngClass]="{ 'collapsed': collapseSidebar() }">
-    <div class="sidebar-header">
-        <div class="logo-box">
-            <span class="logo-icon">
-                <img src="./assets/logo.svg" alt="WorkFlow">
-            </span>
-            <div class="logo-txt">
-                <h1>{{ 'appName' | translate }}</h1>
-                <p>{{ 'appSubName' | translate }}</p>
+<aside id="sidebar" class="sidebar" [ngClass]="{ collapsed: collapseSidebar() }">
+  <div class="sidebar-header">
+    <div class="logo-box">
+      <span class="logo-icon">
+        <!-- <img src="./assets/logo.svg" alt="WorkFlow" /> -->
+        <img src="assets/Alsaif.png" alt="Alsaif" style="width: 90px; height: 40px;" />
+      </span>
+      <div class="logo-txt">
+        <!-- <h1>{{ 'appName' | translate }}</h1>
+      <p>{{ 'appSubName' | translate }}</p> -->
+        <!-- <h1>Al Saif</h1>  -->
+      </div>
+    </div>
+  </div>
+  <div class="mid-section">
+    @if (userProjDetails().length > 0) {
+      <div class="nav-section">
+        <p class="section-label">Operations</p>
+        @for (prcItem of userProjDetails(); track $index) {
+          <a class="nav-item" [class.active]="prcItem.open" (click)="toggleProcess(prcItem)">
+            <div class="nav-content">
+              <span class="material-symbols-outlined">package_2</span>
+              <span>{{ prcItem?.process_name ?? '-' }}</span>
             </div>
-        </div>
-    </div>
-    <div class="mid-section">
-        <div class="nav-section">
-            <p class="section-label">Operations</p>
-            @for (prcItem of userProjDetails(); track $index) {
-                <a class="nav-item" [class.active]="prcItem.open" (click)="toggleProcess(prcItem)">
-                    <div class="nav-content">
-                        <span class="material-symbols-outlined">package_2</span>
-                        <span>{{prcItem?.process_name ?? '-'}}</span>
-                    </div>
-                    <span class="material-symbols-outlined color-sec">
-                        {{ prcItem.open ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
-                    </span>
+            <span class="material-symbols-outlined color-sec">
+              {{ prcItem.open ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
+            </span>
+          </a>
+          @if (prcItem.open && prcItem?.activities?.length > 0) {
+            @for (actItem of prcItem?.activities; track $index) {
+              <div class="sub-menu">
+                <a class="sub-item ">
+                  {{ actItem?.activity_name ?? '-' }}
+                  <span class="badge">{{ actItem?.work_item_count }}</span>
                 </a>
-                @if (prcItem.open && prcItem?.activities?.length > 0) {
-                    @for (actItem of prcItem?.activities; track $index) {
-                        <div class="sub-menu">
-                            <a class="sub-item">
-                                {{actItem?.activity_name ?? '-'}}
-                                <span class="badge">{{actItem?.work_item_count}}</span>
-                            </a>
-                        </div>
-                    }
-                }
+              </div>
             }
-        </div>
-        <div class="nav-section" style="border: none;">
-            <p class="section-label">Management</p>
-            <a class="nav-item">
-                <span class="material-symbols-outlined">group</span>
-                Customer Management
-                <span class="material-symbols-outlined mrlft">
-                    keyboard_arrow_down
-                </span>
-            </a>
-            <a class="nav-item">
-                <span class="material-symbols-outlined">dashboard</span>
-                Dashboards
-                <span class="material-symbols-outlined mrlft">
-                    keyboard_arrow_down
-                </span>
-            </a>
-        </div>
+          }
+        }
+      </div>
+    }
+    <div class="nav-section" style="border: none">
+      <p class="section-label">Management</p>
+      <a class="nav-item">
+        <span class="material-symbols-outlined">group</span>
+        Customer Management
+        <span class="material-symbols-outlined mrlft"> keyboard_arrow_down </span>
+      </a>
+      <a class="nav-item">
+        <span class="material-symbols-outlined">dashboard</span>
+        Dashboards
+        <span class="material-symbols-outlined mrlft"> keyboard_arrow_down </span>
+      </a>
     </div>
-    <div class="user-footer">
-        <button (click)="handleLogout();">Logout</button>
-        <img src="./assets/Avatar.png" class="avatar" alt="User">
-        <div class="user-details">
-            <span class="user-name">{{userDetails()?.name ?? '-'}}</span>
-            <span class="user-email">{{userDetails()?.email ?? '-'}}</span>
-        </div>
+  </div>
+  <div class="user-footer">
+    <div class="userdtl">
+      <img src="assets/Avatar.png" class="avatar" alt="User" />
+      <div class="user-details">
+        <span class="user-name">{{ userDetails()?.name ?? '-' }}</span>
+        <span class="user-email" title="{{ userDetails()?.email ?? '-' }}">{{
+          userDetails()?.email ?? '-'
+          }}</span>
+      </div>
     </div>
+    <div class="user-actions dropdown" (click)="$event.stopPropagation()">
+      <button class="trans-bttn dropdown-toggle" type="button" aria-haspopup="true"
+        [attr.aria-expanded]="dropdownOpen()" (click)="toggleDropdown($event)">
+        <span class="dropdown-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24">
+            <path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" />
+          </svg>
+        </span>
+      </button>
+      <div class="dropdown-menu" role="menu" [class.show]="dropdownOpen()">
+        <a class="dropdown-item" (click)="changeLanguage('en'); closeDropdown()">English</a>
+        <a class="dropdown-item" (click)="changeLanguage('ar'); closeDropdown()">Arabic</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" (click)="handleLogout(); closeDropdown()">
+          <span class="material-symbols-outlined"> logout </span>
+          Logout
+        </a>
+      </div>
+    </div>
+  </div>
 </aside>

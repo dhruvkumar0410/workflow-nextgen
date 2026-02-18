@@ -1,5 +1,7 @@
-<app-sidebar></app-sidebar>
-<main class="main-content">
-    <app-header></app-header>
-    <router-outlet></router-outlet>
-</main>
+<div class="wrapper-section">
+    <app-sidebar [ngClass]="{ 'collapse-side': statechecking }"></app-sidebar>
+    <main class="main-content" [ngClass]="{ 'widthchanged': statechecking }">
+        <app-header></app-header>
+        <router-outlet></router-outlet>
+    </main>
+</div>

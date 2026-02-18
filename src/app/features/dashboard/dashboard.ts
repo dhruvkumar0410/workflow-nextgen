@@ -8,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './dashboard.css',
 })
 export class Dashboard {
+  
+  lst_name: string = '';
 
+  fltr(val: string) {
+    this.lst_name = val;
+  }
 }

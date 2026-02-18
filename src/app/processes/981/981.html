@@ -1,7 +1,7 @@
 <div class="bottom-section">
   <div class="bk-section">
-    <h3>Booking Records</h3>
-    <p>Manage and track all shipment bookings</p>
+    <h3>{{ 'booking.title' | translate }}</h3>
+    <p>{{ 'booking.description' | translate }}</p>
   </div>
   <div class="quick-filters">
     <span class="material-symbols-outlined star-icon">grade</span>
@@ -36,6 +36,7 @@
             <li><input type="checkbox" id="transit" /> <label for="transit">In Transit</label></li>
             <li><input type="checkbox" id="High" /> <label for="High">High Prority</label></li>
           </ul>
+
           <div (click)="lst_name = ''" class="overlay"></div>
         }
       </div>
@@ -47,8 +48,8 @@
         </button>
         @if (lst_name == 'priority') {
           <ul class="checklist">
-            <li><input type="checkbox" id="transit1" /> <label for="transit">In Transit</label></li>
-            <li><input type="checkbox" id="High1" /> <label for="High">High Prority</label></li>
+            <li><input type="checkbox" id="transit" /> <label for="transit">In Transit</label></li>
+            <li><input type="checkbox" id="High" /> <label for="High">High Prority</label></li>
           </ul>
           <div (click)="lst_name = ''" class="overlay"></div>
         }

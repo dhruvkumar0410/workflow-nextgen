@@ -1,7 +1,6 @@
 ## Workflow
 
-# v1.1.2 (16 FEB 2026)
+# v1.1.3 (18 FEB 2026)
 
-1. Get User Details Api.
-2. Avatar change.
-3. Multiple functionality written.
+1. Added 981 process component.
+2. Improvements in functionality & UI.
