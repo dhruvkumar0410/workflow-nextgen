@@ -1,7 +1,7 @@
-import { Component, OnInit, signal, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { Utils } from '../../core/utils/utils';
 
 import { AuthService } from './../../core/guards/auth.service';
@@ -11,11 +11,11 @@ import { Sidebar } from '../../services/sidebar/sidebar';
 @Component({
   standalone: true,
   selector: 'app-sidebar',
-  imports: [CommonModule, TranslatePipe],
+  imports: [CommonModule],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css',
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
 
   collapseSidebar = signal<boolean>(false);
   userProjDetails = signal<any>([]);
@@ -24,14 +24,30 @@ export class SidebarComponent implements OnInit {
   private authService = inject(AuthService);
   private sharedService = inject(SharedService);
   private sidebarService = inject(Sidebar);
+  private translate = inject(TranslateService);
   private utils = inject(Utils);
+  private _docClickHandler: any;
+
+  dropdownOpen = signal<boolean>(false);
 
   ngOnInit() {
     this.sharedService.collapseSidebar$.subscribe((state: boolean) => {
       this.collapseSidebar.set(state);
     });
-    
+    this._docClickHandler = (ev: any) => {
+      if (this.dropdownOpen()) {
+        this.dropdownOpen.set(false);
+      }
+    };
+    document.addEventListener('click', this._docClickHandler);
+
     this.initialize();
+  }
+
+  ngOnDestroy() {
+    if (this._docClickHandler) {
+      document.removeEventListener('click', this._docClickHandler);
+    }
   }
 
   async initialize() {
@@ -65,6 +81,30 @@ export class SidebarComponent implements OnInit {
         }
       });
     });
+  }
+
+  changeLanguage(lang: string) {
+    try {
+      this.translate.use(lang);
+      try {
+        // set document language and text direction for Arabic
+        document.documentElement.lang = lang;
+        document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+      } catch (e) {
+        // ignore if document not available (e.g., server-side)
+      }
+    } catch (err) {
+      console.error('Failed to change language', err);
+    }
+  }
+
+  toggleDropdown(event: Event) {
+    event.stopPropagation();
+    this.dropdownOpen.update(v => !v);
+  }
+
+  closeDropdown() {
+    this.dropdownOpen.set(false);
   }
 
   handleLogout() {

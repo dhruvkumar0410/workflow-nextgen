@@ -9,15 +9,15 @@ export const routes: Routes = [
                 .then(m => m.ShellComponent),
         children: [
             {
-                path: 'dashboard',
+                path: 'process',
                 loadComponent: () =>
-                    import('./features/dashboard/dashboard')
-                        .then(m => m.Dashboard),
+                    import('./processes/981/981')
+                        .then(m => m.Process981),
                 canActivate: [AuthGuard]
             },
             {
                 path: '',
-                redirectTo: 'dashboard',
+                redirectTo: 'process',
                 pathMatch: 'full'
             }
         ]

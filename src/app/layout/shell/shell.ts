@@ -1,17 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
 //Components
+import { SharedService } from '../../shared/services/shared';
+
 import { HeaderComponent } from '../header/header';
 import { SidebarComponent } from '../sidebar/sidebar';
 
 @Component({
   standalone: true,
   selector: 'app-shell',
-  imports: [RouterOutlet, HeaderComponent, SidebarComponent],
+  imports: [
+    RouterOutlet,
+    HeaderComponent,
+    SidebarComponent,
+    CommonModule
+  ],
   templateUrl: './shell.html',
   styleUrl: './shell.css',
 })
-export class ShellComponent {
+export class ShellComponent implements OnInit {
 
+  statechecking: boolean = false;
+
+  constructor(private sharedService: SharedService) { }
+
+  ngOnInit() {
+    this.sharedService.collapseSidebar$.subscribe((state: boolean) => {
+      // Handle sidebar collapse state if needed
+      console.log('Sidebar collapse state:', state);
+      this.statechecking = state;
+    });
+  }
 }

@@ -1,6 +1,6 @@
 /* --- Sidebar Layout --- */
 .sidebar {
-    width: var(--sidebar-width);
+    width: 270px;
     background: var(--white);
     border-right: 1px solid var(--border-color);
     display: flex;
@@ -8,10 +8,6 @@
     transition: margin-left 0.3s ease;
     min-width: 270px;
     height: 100vh;
-}
-
-.sidebar.collapsed {
-    margin-left: calc(var(--sidebar-width) * -1.05);
 }
 
 /* --- Sidebar Header --- */
@@ -73,6 +69,18 @@
     display: block;
 }
 
+.user-email,
+.user-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    word-break: break-word;
+    max-width: 160px;
+}
+
 /* --- Sidebar Navigation --- */
 .mid-section {
     overflow: auto;
@@ -112,7 +120,8 @@
     cursor: pointer;
 }
 
-.nav-item:hover, .sub-item:hover {
+.nav-item:hover,
+.sub-item:hover {
     background: #f1f5f9;
 }
 
@@ -163,4 +172,74 @@
 .sub-item.active {
     color: var(--text-primary);
     font-weight: 500;
+}
+
+.userdtl {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.active-submenu {
+    color: var(--text-primary);
+    font-weight: 500;
+    background-color: #f1f5f9;
+}
+
+/* Dropdown for user actions */
+.user-actions {
+    position: relative;
+    display: flex;
+    align-items: center
+}
+
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 0;
+    cursor: pointer
+}
+
+.dropdown .caret {
+    font-size: 12px;
+    color: var(--text-secondary)
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    bottom: 44px;
+    background: var(--white);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    min-width: 160px;
+    z-index: 30
+}
+
+.dropdown-item {
+    display: block;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: var(--text-primary);
+    text-decoration: none;
+    cursor: pointer
+}
+
+.dropdown-item .material-symbols-outlined {
+    margin-right: 8px;
+    vertical-align: middle
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 6px 0
+}
+
+.dropdown-menu.show {
+    display: block
 }

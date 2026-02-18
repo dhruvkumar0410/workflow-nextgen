@@ -6,6 +6,7 @@
     padding: 16px;
     margin-bottom: 16px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.16);
+
 }
 
 .card-header {
@@ -39,7 +40,7 @@
 }
 
 .tag-pending {
-    background: rgba(175, 126, 47, 0.10);
+    background: rgba(175, 126, 47, 0.10);;
     color: #AF7E2F;
 }
 
@@ -218,12 +219,12 @@
     font-size: 14px;
 }
 
-.pagi-section p span {
+.pagi-section p span{
     color: var(--text-primary);
     font-weight: 500;
 }
 
-.pagi-section {
+.pagi-section{
     margin-bottom: 16px;
 }
 
@@ -239,7 +240,7 @@
     background-position: -24px center;
 } */
 
-.dropdown {
+.dropdown { 
     position: relative;
 }
 
@@ -277,23 +278,12 @@
 }
 
 .dropdown .checklist li:last-child {
-    border-radius: 0px 0px 8px 8px;
+    border-radius: 0px 0px 8px 8px ;
 }
 
 input:focus-visible {
     outline: #155EFB;
 }
 
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-}
-
-.checklist {
-    position: relative;
-    z-index: 2;
-}
+.overlay{position: fixed; top: 0; left: 0; width: 100%; height: 100%;; z-index: 1;}
+.checklist{position: relative;z-index: 2;}

@@ -1,7 +1,16 @@
 /* --- Main Content --- */
 .main-content {
-    flex-grow: 1;
-    overflow-y: auto;
-    flex: 1 1 auto;        /* OR simply: flex: 1 */
-    min-width: 0;
+  overflow-y: auto;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+::ng-deep html[dir="ltr"] .collapse-side {
+  transform: translateX(-270px);
+  width: 0px;
+}
+
+::ng-deep html[dir="rtl"] .collapse-side {
+  transform: translateX(270px);
+  width: 0px;
 }
