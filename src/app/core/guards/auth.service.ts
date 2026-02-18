@@ -30,11 +30,7 @@ export class AuthService {
   }
 
   logout() {
-    this.utils.removeItemByKey('wmTkn');
-    this.utils.removeItemByKey('wmDtls');
-    this.utils.removeItemByKey('wmUsrDtls');
-    this.utils.removeItemByKey('wmRefTkn');
-    this.utils.removeItemByKey('wmAccDtls');
+    this.utils.removeItemByKey('wmLgDtls');
     this.callSSO();
   }
 
@@ -60,16 +56,16 @@ export class AuthService {
 
   async refreshToken(): Promise<string | null> {
     try {
-      const refreshToken = await this.utils.getRefreshToken();
+      let loginDetails: any = await this.utils.getLoginDetails();
 
-      if (!refreshToken) {
+      if (!loginDetails?.refToken) {
         this.logout();
         return null;
       }
 
       const url = environment.outpostURL + 'token?grant_type=refresh_token' + '&refresh_token=' + 
-                  refreshToken + '&client_id=' + environment.workflowCI + 
-                  '&client_secret=' + environment.workflowCS;
+        loginDetails?.refToken + '&client_id=' + environment.workflowCI + 
+        '&client_secret=' + environment.workflowCS;
       const apiOptions = this.utils.buildApiOptions(url, RequestType.POST);
 
       const response: any = await lastValueFrom(
@@ -77,11 +73,12 @@ export class AuthService {
       );
 
       if (response?.status === 200 && response?.body) {
-
         const body: any = response.body;
-        await this.utils.setAccessToken(body?.access_token);
-        await this.utils.setRefreshToken(body?.refresh_token);
-
+        loginDetails.token = body?.access_token;
+        
+        this.utils.removeItemByKey('wmLgDtls');
+        this.utils.setLoginDetails(loginDetails);
+        
         return body?.access_token;  
       }
 

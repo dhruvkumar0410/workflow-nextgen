@@ -14,6 +14,21 @@ export class Utils {
         private encryptionService: EncryptionService
     ) { }
 
+    async setLoginDetails(dtls: any) {
+        if (!dtls) return;
+
+        const encrypted: any = await this.encryptionService.encryptString(JSON.stringify(dtls));
+        localStorage.setItem('wmLgDtls', encrypted);
+    }
+
+    async getLoginDetails() {
+        const dtls = localStorage.getItem('wmLgDtls');
+        if (!dtls) return null;
+
+        const details: any = await this.encryptionService.decryptString(dtls);
+        return JSON.parse(details);
+    }
+
     async setAccessToken(token: string) {
         if (!token) return;
 
@@ -22,10 +37,10 @@ export class Utils {
     }
 
     async getAccessToken() {
-        const token = localStorage.getItem('wmTkn');
-        if (!token) return null;
+        const dtls: any = await this.getLoginDetails();
+        if (!dtls && !dtls?.token) return null;
 
-        return await this.encryptionService.decryptString(token);
+        return dtls.token;
     }
 
     async setStringByKey(key: any, dtls: any) {
@@ -72,18 +87,5 @@ export class Utils {
             RequestMethod: method,
             RequestBody: body
         };
-    }
-
-    async setRefreshToken(token: string) {
-        if (!token) return;
-        const encrypted: any = await this.encryptionService.encryptString(token);
-        localStorage.setItem('wmRefTkn', encrypted);
-    }
-
-    async getRefreshToken() {
-       const token = localStorage.getItem('wmRefTkn');
-       if (!token) return null;
-
-       return await this.encryptionService.decryptString(token);
     }
 }

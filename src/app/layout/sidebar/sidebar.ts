@@ -36,13 +36,13 @@ export class SidebarComponent implements OnInit {
 
   async initialize() {
     await this.loadUserDetails();
-    const accDetails = await this.utils.getDetailByKey('wmAccDtls');
-    this.userProjDetails.set(accDetails);
+    const accDetails = await this.utils.getDetailByKey('wmLgDtls');
+    this.userProjDetails.set(accDetails?.processes);
   }
 
   async loadUserDetails() {
-    const data = await this.utils.getDetailByKey('wmUsrDtls');
-    this.userDetails.set(data);
+    const data: any = await this.utils.getDetailByKey('wmLgDtls');
+    this.userDetails.set(data?.userDetails);
   }
 
   toggleProcess(selectedProcess: any) {

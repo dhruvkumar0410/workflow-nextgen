@@ -65,12 +65,15 @@ export class AuthGuard implements CanActivate {
 
     if (response?.status == 200 && response?.body) {
       let body: any = response?.body;
-      await this.utils.setAccessToken(body?.access_token);
-      await this.utils.setRefreshToken(body?.refresh_token);
-      await this.utils.setDetailByKey('wmDtls', body);
-      await this.authService.refreshToken();
+      const details = {
+        token: body.access_token,
+        refToken: body.refresh_token
+      }
+      
+      await this.utils.setLoginDetails(details);
       await this.getAccounts();
       await this.getUserDetails();
+      this.router.navigate(['/']);
     } else {
       this.authService.callSSO();
     }
@@ -80,8 +83,10 @@ export class AuthGuard implements CanActivate {
     try {
       const response: any = await this.shared.userDetail();
       if (response?.body) {
-        await this.utils.setDetailByKey('wmUsrDtls', response?.body);
-        this.router.navigate(['/']);
+        let details: any = await this.utils.getLoginDetails();
+        details.userDetails = response.body;
+        this.utils.removeItemByKey('wmLgDtls');
+        await this.utils.setLoginDetails(details);
       }
     } catch (error) {
       console.error('Failed to fetch user details', error);
@@ -91,7 +96,10 @@ export class AuthGuard implements CanActivate {
     try {
       const response: any = await this.shared.getAccounts();
       if (response?.body) {
-        await this.utils.setDetailByKey('wmAccDtls', response?.body[0]?.projects[0]?.processes);
+        let details: any = await this.utils.getLoginDetails();
+        details.processes = response?.body[0]?.projects[0]?.processes;
+        this.utils.removeItemByKey('wmLgDtls');
+        await this.utils.setLoginDetails(details);
       }
     } catch (error) {
       console.error('Failed to fetch account details', error);
