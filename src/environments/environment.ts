@@ -21,6 +21,7 @@ export const environment = {
   // BASE URLs for Application & APIs
   appBaseURL: 'http://localhost:4206/',
   apiBaseUrl: 'https://workflow-uat.mappls.com/api/workflow/',
+  apiProdBaseUrl: 'https://workflow.mappls.com/projectworkflow/client/custom/query/',
   servicePHPURL: 'https://workflow.mappls.com/workflow_admin_proxy/service.php',
   anchorUrl: 'https://anchor.mapmyindia.com/api/',
   outpostURL: 'https://outpost.mapmyindia.com/api/security/oauth/',

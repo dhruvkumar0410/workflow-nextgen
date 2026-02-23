@@ -1,0 +1,588 @@
+<div class="bottom-section">
+    <header>
+        <div class="bk-section">
+            <h3>New Shipment Booking</h3>
+        </div>
+        <div class="steepr-top-section">
+            <ul class="steeper-list">
+                @for (step of [1,2,3,4,5]; track step) {
+                    <li [class.present-step]="currentStep === step" 
+                        [class.completed-step]="currentStep > step">
+                    <span class="step-count">{{ step }}</span>
+                    </li>
+                }
+            </ul>
+        </div>
+    </header>
+    <div class="tab-content-section steeper-form">
+        <div class="steepr-bottom-section">
+            <div class="steepr-bottom-body">
+                @switch (currentStep) {
+                    @case (1) {
+                        <div class="form-wrapper">
+                            <div class="cp-form-heading">
+                                <h5>Account Details</h5>
+                            </div>
+                            <div class="cp-form-content-container bg-white">
+                                <div class="cp-form-content">
+                                    <div class="radio-box-wraper">
+                                        <h3>Account Type</h3>
+                                        <div class="radio-section">
+                                            <label class="cstm-label" for="Retails">
+                                                <input type="radio" name="account-type"  id="Retails" value="retail" 
+                                                    [(ngModel)]="accountType" (ngModelChange)="onAccountTypeChange($event)">
+                                                    Retails
+                                            </label>
+                                            <label class="cstm-label" for="Corporate">
+                                                <input type="radio" name="account-type" id="Corporate" value="corporate" 
+                                                    [(ngModel)]="accountType" (ngModelChange)="onAccountTypeChange($event)">
+                                                    Corporate
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="grup_row">
+                                        <div class="select-box">
+                                            <label class="cstm-label" for="">
+                                                Customer ID <span class="label-danger">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" placeholder="Search Customer" 
+                                                [(ngModel)]="customerSearch" (ngModelChange)="onSearchChange($event)">
+                                            @if(customerList().length > 0){
+                                                <div class="search-overlay" (click)="closeCustomerList()"></div>
+                                                <div class="filter_list">
+                                                    <ul>
+                                                        @for (item of customerList(); track item.id) {
+                                                        <li (click)="selectCustomer(item)">
+                                                            <p>{{ item.name }}</p>
+                                                            >
+                                                        </li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            }
+                                        </div>
+        
+                                        <div class="select-box ">
+                                            <label class="cstm-label" for="">Reference Number (Optional)</label>
+                                            <input type="number" placeholder="Enter Reference Number" class="form-control" 
+                                                [(ngModel)]="referenceNumber">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @case (2){
+                        <div class="form-wrapper">
+                            <div class="cp-form-heading">
+                                <h5>Address Details</h5>
+                            </div>
+                            <div class="cp-form-content-container cp-address-form">
+                                <div class="address-container">
+                                    <div class="address-col">
+                                        <div class="cp-form-heading">
+                                            <h5>Sender Details</h5>
+                                        </div>
+                                        <div class="add-input-content">
+                                            <div class="input_bx">
+                                                <div class="select-box ">
+                                                    <label class="cstm-label" for="">Select Address
+                                                    </label>
+                                                    <select class="form-control" [(ngModel)]="selectedsenderAddress" 
+                                                        (ngModelChange)="onAddressSelect()">
+                                                            <option [ngValue]="null">Select Address</option>
+                                                            @for (item of accountdetails()?.senderList; track item.address) {
+                                                                <option [ngValue]="item">{{ item.address }}</option>
+                                                            }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            @if(selectedsenderAddress){
+                                                <div class="preview-List-container blue-card">
+                                                    <p>{{ selectedsenderAddress.address }}</p>
+                                                </div>
+                                            }
+                                            <div class="input_bx">
+                                                <div class="select-box ">
+                                                    <label class="cstm-label" for="">Sender Branch
+                                                    </label>
+                                                        <select class="form-control" [ngModel]="selectedsenderBranch">
+                                                                    <option value="">Select Branch</option>
+                                                                @if(selectedsenderBranch){
+                                                                    <option [value]="selectedsenderBranch">
+                                                                    {{ selectedsenderBranch }}
+                                                                    </option>
+                                                                }
+                                                        </select>
+                                                </div>
+                                                <span class="note-txt">Auto resolve from selected address</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="address-col">
+                                        <div class="cp-form-heading">
+                                            <h5>Receiver Details</h5>
+                                        </div>
+                                        <div class="add-input-content">
+                                            <div class="input_bx">
+                                                <div class="select-box ">
+                                                    <label class="cstm-label" for="">Select Address
+                                                    </label>
+                                                        <select class="form-control" [(ngModel)]="selectedreceiverAddress" 
+                                                            (ngModelChange)="onreceiverAddressChange()">
+                                                                <option [ngValue]="null">Select Address</option>
+                                                                @for (item of accountdetails()?.receiverList; track item.address) {
+                                                                <option [ngValue]="item">
+                                                                    {{ item.address }}
+                                                                </option>
+                                                                }
+                                                        </select>
+                                                </div>
+                                            </div>
+                                            @if(selectedreceiverAddress){
+                                                <!-- <div class="preview-List-container orange-card"> -->
+                                                <div class="preview-List-container blue-card">
+                                                    <p>{{ selectedreceiverAddress.address }}</p>
+                                                </div>
+                                            }
+                                            <div class="input_bx">
+                                                <div class="select-box ">
+                                                    <label class="cstm-label" for="">Receiver Branch
+                                                    </label>
+
+                                                    <select class="form-control" [(ngModel)]="selectedreceiverBranch">
+                                                            <option value="">Select Branch</option>
+                                                            @if(selectedreceiverBranch){
+                                                                <option [value]="selectedreceiverBranch">
+                                                                {{ selectedreceiverBranch }}
+                                                                </option>
+                                                            }
+                                                    </select>
+                                                </div>
+                                                <span class="note-txt">Auto resolve from selected address</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    } 
+                    @case (3){
+                        <div class="tab-content-section steeper-form">
+                            <div class="steepr-bottom-section">
+                                <div class="form-wrapper">
+                                    <div class="cp-form-heading">
+                                        <div class="grp-header">
+                                            <h5>Consignment Details</h5>
+                                            <div class="right-header">
+                                                <p> Group under shipment Booking ID : <span class="bookingid">BK-2026-001242</span></p>
+                                            </div>
+                                        </div>
+                                        <button class="btn-secondary cstm-add-btn" (click)="addnew()">
+                                            <span class="material-symbols-outlined">add
+                                            </span>Add Another Piece
+                                        </button>
+                                    </div>
+                                    <div class="cp-form-content-container cp-consignment-form">
+                                        <div class="address-container consignment-container">
+                                            @for (item of consignmentDetails; let i = $index; track i) {
+                                                <div class="address-col">
+                                                    <div class="cp-form-heading">
+                                                        <h5>Consignment Piece #{{ i + 1 }}</h5>
+                                                        <span class="id-badge">WB-772344-{{ i + 1 }}</span>
+                                                        @if(consignmentDetails.length > 1){
+                                                        <button type="button" (click)="removePiece(i)">Remove</button>
+                                                        <!-- <span class="material-icons-round" style="color: #FE0000;" (click)="removePiece(i)">remove_circle_outline</span> -->
+                                                        }
+                                                    </div>
+                                                    <div class="input-content">
+                                                        <div class="section-one">
+                                                            <div class="radio-box-wraper">
+                                                                <h3>Consignment Type <span class="label-danger">*</span></h3>
+                                                                <div class="radio-section">
+                                                                    <label class="cstm-label" for="">
+                                                                        <input type="radio" [name]="'type-' + i" value="Forward" 
+                                                                            [(ngModel)]="item.type">Forward
+                                                                    </label>
+                                                                    <label class="cstm-label" for="">
+                                                                        <input type="radio" [name]="'type-' + i" value="Reverse" 
+                                                                            [(ngModel)]="item.type">Reverse
+                                                                    </label>
+                                                                </div>
+                                                                <div class="input_bx">
+                                                                    <div class="select-box ">
+                                                                        <label class="cstm-label" for="">Category
+                                                                            <span class="label-danger">*</span>
+                                                                        </label>
+                                                                    </div>
+                                                                    <select class="form-control" [(ngModel)]="item.category">
+                                                                        <option [ngValue]="null">Select Shipment Category</option>
+                                                                        @for (item of accountdetails()?.shipment_category; track item.key){
+                                                                            <option [ngValue]="item.key">
+                                                                            {{ item.value }}
+                                                                            </option>
+                                                                        }
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="section-two">
+                                                            <div class="cstm-group">
+                                                                <div class="input_bx">
+                                                                    <div class="select-box ">
+                                                                        <label class="cstm-label" for="" >Weight (kgs) 
+                                                                            <span class="label-danger">*</span>
+                                                                        </label>
+                                                                        <select class="form-control" [(ngModel)]="item.weight">
+                                                                            <option [ngValue]="null">Select Weight Range</option>
+                                                                            @for (weight of accountdetails()?.weight_range; track weight.key){
+                                                                                <option [ngValue]="weight.key">{{ weight.value }}</option>
+                                                                            }
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+            
+                                                                <div class="input_bx">
+                                                                    <div class="select-box ">
+                                                                        <label class="cstm-label" for="">Length (cm)</label>
+                                                                        <input type="text" class="form-control" placeholder="Length (cm)" 
+                                                                            [(ngModel)]="item.length">
+                                                                    </div>
+                                                                </div>
+            
+                                                                <div class="input_bx">
+                                                                    <div class="select-box ">
+                                                                        <label class="cstm-label" for="">Width (cm)</label>
+                                                                        <input type="text" class="form-control" placeholder="Width (cm)" 
+                                                                            [(ngModel)] ="item.width">
+                                                                    </div>
+                                                                    <!-- <span class="note-txt">Auto resolve from selected address</span> -->
+                                                                </div>
+            
+                                                                <div class="input_bx">
+                                                                    <div class="select-box ">
+                                                                        <label class="cstm-label" for="">Height (cm)</label>
+                                                                        <input type="text" class="form-control" placeholder="Height (cm)" 
+                                                                            [(ngModel)]="item.height">
+                                                                    </div>
+                                                                    <!-- <span class="note-txt">Auto resolve from selected address</span> -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="two-grp-inp">
+                                                                <div class="input_bx">
+                                                                    <div class="select-box ">
+                                                                        <label class="cstm-label" for="">Additional Packaging</label>
+                                                                    </div>
+                                                                    <select class="form-control" [(ngModel)]="item.packaging">
+                                                                        <option [ngValue]="null">Select Additional Packaging</option>
+                                                                        @for (packing of accountdetails()?.additional_packaging; track packing.key){
+                                                                            <option [ngValue]="packing.key">{{ packing.value }}</option>
+                                                                        }
+                                                                    </select>
+                                                                </div>
+                                                                <!-- <span class="note-txt">Auto resolve from selected address</span> -->
+                                                                <div class="input_bx">
+                                                                    <div class="select-box ">
+                                                                        <label class="cstm-label" for="">Declared Value (SAR)
+                                                                            <span class="label-danger">*</span>
+                                                                        </label>
+                                                                        <input type="text" class="form-control" 
+                                                                            placeholder="Declared Value (SAR)" 
+                                                                            [(ngModel)]="item.declaredValue">
+                                                                    </div>
+                                                                    <!-- <span class="note-txt">Auto resolve from selected address</span> -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="input_bx">
+                                                                <div class="select-box ">
+                                                                    <label class="cstm-label" for="">Description (Optional)</label>
+                                                                    <textarea class="form-textarea" placeholder="Leave a comment here"
+                                                                        id="floatingTextarea" [(ngModel)]="item.description" maxlength="500">
+                                                                    </textarea>
+                                                                </div>
+                                                            </div>
+                                                            <!-- <span class="note-txt">Auto resolve from selected address</span> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    } 
+                    @case (4) {
+                        <div class="form-wrapper">
+                            <div class="cp-form-heading">
+                                <h5>Services Availed</h5>
+                                <button class="trans-bttn">
+                                </button>
+                            </div>
+                            <div class="cp-form-content-container">
+                                <div class="address-container">
+                                    <div class="address-col">
+                                        <div class="cp-form-heading">
+                                            <h5>Sender Services</h5>
+                                        </div>
+                                        <div class="location-container">
+                                            <!-- <div class="location-col">
+                                                <span></span>
+                                                <div class="location-row">
+                                                    <p>Doorstep Pickup</p>
+                                                    <span>Rider will collect from sender address</span>
+                                                </div>
+                                            </div> -->
+
+                                            <div class="location-col">
+                                                <label class="cstm-label loct-cst-label" for="">Location Type
+                                                </label>
+                                                <ul class="services-list">
+                                                    <li>
+                                                        <div class="radio-steepr">
+                                                            <input type="radio" name="pickupSenderType" value="Doorstep Pickup" 
+                                                                [(ngModel)]="pickupSenderType">
+                                                        </div>
+                                                        <div class="steepr-bottom-header">
+                                                            <h3>Doorstep Pickup</h3>
+                                                            <p>Rider will collect from sender address</p>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="radio-steepr">
+                                                            <input type="radio" name="pickupSenderType" value="Drop-off at Hub" 
+                                                                [(ngModel)]="pickupSenderType">
+                                                        </div>
+                                                        <div class="steepr-bottom-header">
+                                                            <h3>Drop-off at Hub</h3>
+                                                            <p>Sender will drop off at Downtown Hub.</p>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <div class="pickup-warning">
+                                                    <p><b>Pickup Request</b>: A pickup request will be automatically created for
+                                                        the next available slot.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="address-col">
+                                        <div class="cp-form-heading">
+                                            <h5>Receiver Services</h5>
+                                        </div>
+                                        <div class="location-container">
+                                            <div class="location-col">
+                                                <label class="cstm-label loct-cst-label" for="">Location Type
+                                                </label>
+
+                                                <ul class="services-list">
+                                                    <li>
+                                                        <div class="radio-steepr">
+                                                            <input type="radio" name="receiverType" value="Doorstep Delivery" 
+                                                                [(ngModel)]="receiverType">
+                                                        </div>
+                                                        <div class="steepr-bottom-header">
+                                                            <h3>Doorstep Delivery</h3>
+                                                            <p>Standard delivery to receiver address</p>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="radio-steepr">
+                                                            <input type="radio" name="receiverType" value="pick-up from Hub" 
+                                                                [(ngModel)]="receiverType">
+                                                        </div>
+                                                        <div class="steepr-bottom-header">
+                                                            <h3>Pick-up from Hub</h3>
+                                                            <p>Receiver will collect from Hub</p>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+
+                                                <div class="location-toggle">
+                                                    <div class="location-row">
+                                                        <p>Schedule Delivery</p>
+                                                        <span>Choose a specific delivery date</span>
+                                                    </div>
+                                                    <div class="toggle-switch">
+                                                        <label class="switch-label">
+                                                            <!-- <input type="checkbox" class="checkbox" 
+                                                                (change)="deliveryDateEnabled.set($event.target.checked)"
+                                                                /> -->
+                                                             <input type="checkbox" class="checkbox" [checked]="deliveryDateEnabled()"
+                                                               (change)="onToggleChange($event.target.checked)"
+                                                                />
+                                                            <span class="slider"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                @if (deliveryDateEnabled()) {
+                                                    <div class="input_bx">
+                                                        <div class="select-box ">
+                                                            <label class="cstm-label" for="">Select Delivery Date
+                                                            </label>
+                                                            <!-- <input type="date" class="form-control" value="1"> -->
+                                                            <input type="date" class="form-control" [(ngModel)]="selectedDeliveryDate"
+                                                                (change)="convertToTimestamp()"
+                                                            />
+                                                        </div>
+                                                        <span class="note-txt">Minimum 1 day beyond standard ETA</span>
+                                                    </div>
+                                                }
+                                                <div class="location-toggle">
+                                                    <div class="location-row">
+                                                        <p>Insurance</p>
+                                                        <span>Protection against damage/loss</span>
+                                                    </div>
+                                                    <div class="toggle-switch">
+                                                        <label class="switch-label">
+                                                            <input type="checkbox" class="checkbox" [checked]="insuranceEnabled()" 
+                                                                (change)="insuranceEnabled.set($event.target.checked)"/>
+                                                            <span class="slider"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    } 
+                    @case (5) {
+                        <div class="form-wrapper">
+                            <div class="cp-form-heading">
+                                <h5>Price Summary</h5>
+                                <button class="trans-bttn">
+                                    <!-- <span class="material-icons-outlined" style="color: #FF0707;">
+                                            do_disturb_on
+                                        </span> -->
+                                </button>
+                            </div>
+                            <div class="cp-form-content-container">
+                                <div class="price-sumarry-main">
+                                    <div class="address-container consignment-container">
+                                        <div class="address-col">
+                                            <div class="cp-form-heading">
+                                                <h5>Price Breakdown</h5>
+                                            </div>
+                                            <ul class="charges-card">
+                                                <li class="charges-card-row">
+                                                    <span>Shipping Charges</span>
+                                                    <span class="amount">$350.00</span>
+                                                </li>
+
+                                                <li class="charges-card-row">
+                                                    <span>Storage Charges</span>
+                                                    <span class="amount">$25.00</span>
+                                                </li>
+
+                                                <li class="charges-card-row">
+                                                    <span>Insurance Charges</span>
+                                                    <span class="amount">$45.00</span>
+                                                </li>
+
+                                                <li class="charges-card-row">
+                                                    <span>Packaging Charges</span>
+                                                    <span class="amount">$15.00</span>
+                                                </li>
+
+
+
+                                                <li class="charges-card-row discount cstm-bdr">
+                                                    <span>Discounts Applied</span>
+                                                    <span class="amount">-$15.00</span>
+                                                </li>
+                                            </ul>
+
+
+                                        </div>
+                                        <div class="address-col">
+                                            <!-- <div class="cp-form-heading">
+                                            <h5>Receiver Services</h5>
+                                        </div> -->
+                                            <div class="coupon-payment-card">
+
+                                                <div class="section">
+                                                    <h4>Apply Coupon Code</h4>
+
+                                                    <div class="coupon-row">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Enter coupon code" />
+                                                        <button>Apply</button>
+                                                    </div>
+
+                                                    <div class="available">
+                                                        <span class="label">Available:</span>
+                                                        <span class="chip">WELCOME20</span>
+                                                        <span class="chip">SHIPSMART10</span>
+                                                    </div>
+                                                </div>
+
+                                                <hr />
+
+                                                <div class="section">
+                                                    <h4>Payment Terms</h4>
+
+                                                    <select class="form-control" aria-label="Default select example">
+                                                        <option selected="">Pay at origin (PAO)</option>
+                                                        <option value="1">One</option>
+                                                        <option value="2">Two</option>
+                                                        <option value="3">Three</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="order-total-card">
+                                    <div class="order-total-card-content">
+                                        <h3>Order Totals</h3>
+
+                                        <div class="row">
+                                            <p>Subtotal (Net)</p>
+                                            <span>$420.00</span>
+                                        </div>
+
+                                        <div class="row">
+                                            <p>Taxes (18% GST)</p>
+                                            <span>$75.60</span>
+                                        </div>
+
+                                        <div class="divider"></div>
+
+                                        <div class="total">
+                                            <p>Total Payable</p>
+                                            <strong>$495.60</strong>
+                                        </div>
+
+                                    </div>
+                                        <label class="terms">
+                                            <input type="checkbox" checked />
+                                            <span>
+                                                I accept the <u>Terms & Conditions</u> and <u>Privacy Policy</u>
+                                                for this shipment booking.
+                                            </span>
+                                        </label>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div class="bttn-navigate">
+        <div class="bttn-wrapper">
+            <button type="button" class="btn-secondary1" (click)="handleBack()">{{ currentStep === minStep ? 'Discard' : 'Back' }}</button>
+            <button class="common-btn" (click)="next()" [disabled]="currentStep === 5">Next</button>
+        </div>
+    </div>
+</div>

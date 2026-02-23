@@ -1,7 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject ,OnInit,signal} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AppConstants } from '../../core/constants/app';
+import { Router } from '@angular/router';
+import { Utils } from '../../core/utils/utils';
 
 @Component({
   standalone: true,
@@ -10,16 +12,29 @@ import { AppConstants } from '../../core/constants/app';
   templateUrl: './981.html',
   styleUrl: './981.css',
 })
-export class Process981 {
+export class Process981 implements OnInit {
 
   private appConstants = inject(AppConstants);
+  private router = inject(Router);
+  private utils = inject(Utils);
 
   statusOptions = this.appConstants.dashboardStatusOptions;
   priorityOptions = this.appConstants.dashboardPriorityOptions;
 
   dropdownType: string = '';
+  userProjDetails = signal<any>([]);
   selectedStatus = new Set<string>();
   selectedPriority = new Set<string>();
+
+
+  ngOnInit() {
+    this.initialize();
+  }
+
+  async initialize(){
+    const accDetails = await this.utils.getDetailByKey('wmLgDtls');
+    this.userProjDetails.set(accDetails?.processes);
+  }
 
   handleFtrDropdown(val: string) {
     this.dropdownType = this.dropdownType === val ? '' : val;
@@ -73,4 +88,7 @@ export class Process981 {
     this.selectedPriority.delete(filter.label);
   }
 
+  openShipmentBookingForm(){
+     this.router.navigate(['process', 981, 'add']);    
+  }
 }

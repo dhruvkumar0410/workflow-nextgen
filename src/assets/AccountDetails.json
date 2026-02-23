@@ -1,0 +1,128 @@
+{
+  "retail_customers": [
+    {
+      "customer_id": "CUS-0437",
+      "customer_name": "ABDULAZIZ ALI AL ZAMIL"
+    },
+    {
+      "customer_id": "CUS-0412",
+      "customer_name": "ABDULLAH AL-AWLAKI"
+    },
+    {
+      "customer_id": "CUS-0541",
+      "customer_name": "ABDULLAH ALI AL-SAQQAF"
+    },
+    {
+      "customer_id": "CUS-0223",
+      "customer_name": "AHMED OMAR BAHLIWA"
+    }
+  ],
+  "corporate_customers": [
+    {
+      "customer_id": "CUS-0366",
+      "customer_name": "ALI HASSAN AL-DAHAN & SONS CO. LTD."
+    },
+    {
+      "customer_id": "CUS-0557",
+      "customer_name": "ALI HUSSEIN MUQLAM AL-KHULAIFI TRADING COMPANY"
+    },
+    {
+      "customer_id": "CUS-0267",
+      "customer_name": "ALI HUSSEIN MUQLIM ALKHULAIFI"
+    },
+    {
+      "customer_id": "CUS-0435",
+      "customer_name": "AL-JAWAD AL ADHAM TRADING COMPANY"
+    }
+  ],
+  "senderList" : [
+    {
+      "address": "3535 Aby Abn Kaab - Industrial area - Khaldiya - Riyadh",
+      "branch": "Riyadh - الرياض" 
+    },
+    {
+      "address": "Al Muntazah, Buraidah, AL-Ahsa",
+      "branch": "Al Thuqbah"
+    },
+    {
+      "address": "3142 King Abdullah bin Abdulaziz Street, Al-Yasmin, 7878, Khafji 39261",
+      "branch": "Al Jisr"
+    },
+    {
+      "address": "7542-7420 Omar Ibn Al Khattab St, Uhud, Dammam 32272",
+      "branch": "Jubail"
+    }
+  ],
+  "receiverList" : [
+    {
+      "address": "5647 Near Lamsat Reef for Decoration, 6840, Hail 55424",
+      "branch": "Buraydah"
+    },
+    {
+      "address": "8P2M+PJ, Imam Muhammad Ibn Saud, Al Zuhur, Khamis Mushait 62461",
+      "branch": "Dhahrat Laban"
+    },
+    {
+      "address": "2411 King Abdulaziz Rd, Alazhar، BADA7767، 7767, Al Bahah 65722",
+      "branch": "Hafar Al Batin"
+    },
+    {
+      "address": "CNMA3561 7519 حي, Al Khalidiyah، 3561 علي بن ابي طالب, Hafar Al Batin 39953",
+      "branch": "Al Kharj"
+    }
+  ],
+   "shipment_category": [
+    {
+      "key": "carton_or_box",
+      "value": "Cartoon or Box"
+    },
+    {
+      "key": "pallet",
+      "value": "Pallet"
+    },
+    {
+      "key": "vehicle_body_parts",
+      "value": "Vehicle Body parts"
+    },
+    {
+      "key": "house_hold",
+      "value": "House Hold"
+    },
+    {
+      "key": "vehicle_engine",
+      "value": "Vehicle Engine"
+    }
+  ],
+  "additional_packaging":[
+    {
+      "key": "bubble_wrap",
+      "value": "Bubble Wrap"
+    },
+    {
+      "key": "wooden_box",
+      "value": "Wooden Box"
+    },
+    {
+      "key": "standard_carton",
+      "value": "Standard Carton"
+    }
+  ],
+  "weight_range":[
+    {
+      "key": "1-15",
+      "value": "Range 1 To 15 Kgs"
+    },
+    {
+      "key": "16-30",
+      "value": "Range 16 To 30 Kgs"
+    },
+    {
+      "key": "31-45",
+      "value": "Range 31 To 45 Kgs"
+    },
+    {
+      "key": "46-60",
+      "value": "Range 46 To 60 Kgs"
+    }
+  ]
+}

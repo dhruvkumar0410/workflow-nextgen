@@ -16,6 +16,13 @@ export const routes: Routes = [
                 canActivate: [AuthGuard]
             },
             {
+                path: 'process/:process_id/add',
+                loadComponent: () =>
+                import('./processes/981_add/981_add')
+                    .then(m => m.Process981Add),
+                canActivate: [AuthGuard]
+              },
+            {
                 path: '',
                 redirectTo: 'process',
                 pathMatch: 'full'
@@ -27,3 +34,4 @@ export const routes: Routes = [
         ]
     }
 ];
+

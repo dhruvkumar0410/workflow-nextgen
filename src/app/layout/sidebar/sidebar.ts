@@ -21,10 +21,17 @@ export class SidebarComponent implements OnInit {
   userDetails = signal<any>([]);
   dropdownOpen = signal<boolean>(false);
 
-  private authService = inject(AuthService);
-  private sharedService = inject(Shared);
-  private utils = inject(Utils);
-  private translate = inject(TranslateService);
+  // private authService = inject(AuthService);
+  // private sharedService = inject(Shared);
+  // private utils = inject(Utils);
+  // private translate = inject(TranslateService);
+
+  constructor(
+    private authService: AuthService,
+    private sharedService : Shared,
+    private utils : Utils,
+    private translate : TranslateService
+  ){}
 
   ngOnInit() {
     this.sharedService.collapseSidebar$.subscribe((state: boolean) => {

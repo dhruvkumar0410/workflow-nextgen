@@ -29,7 +29,6 @@ export class ShellComponent implements OnInit {
   ngOnInit() {
     this.sharedService.collapseSidebar$.subscribe((state: boolean) => {
       // Handle sidebar collapse state if needed
-      console.log('Sidebar collapse state:', state);
       this.statechecking = state;
     });
   }
