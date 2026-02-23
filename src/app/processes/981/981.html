@@ -1,8 +1,10 @@
 <div class="bottom-section">
+  @for (prcItem of userProjDetails(); track $index) {
   <div class="bk-section">
-    <h3>Booking Records</h3>
+    <h3>{{ prcItem?.process_name ?? '-' }}</h3>
     <p>Manage and track all shipment bookings</p>
   </div>
+  }
   <div class="quick-filters">
     <span class="material-symbols-outlined star-icon">grade</span>
     <span class="filter-label">Quick Filters:</span>
@@ -81,7 +83,7 @@
         <span class="material-symbols-outlined">download</span>
         Export
       </button>
-      <button class="primary-btn">
+      <button class="primary-btn" (click)="openShipmentBookingForm()">
         <span class="material-symbols-outlined">add</span>
         Create
       </button>
@@ -155,3 +157,4 @@
     </article>
   </div>
 </div>
+

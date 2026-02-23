@@ -13,7 +13,7 @@
     </div>
   </div>
   <div class="mid-section">
-    @if (userProjDetails().length > 0) {
+    @if (userProjDetails()?.length > 0) {
       <div class="nav-section">
         <p class="section-label">Operations</p>
         @for (prcItem of userProjDetails(); track $index) {

@@ -711,6 +711,14 @@ input:focus-visible {
     display: flex;
     gap: 12px;
 }
+.label-danger{
+    color: #ff0000;
+}
+
+.bttn-navigate {
+    float: right; 
+    margin: 10px
+}
 
 .form-control:focus {
     box-shadow: 0px 0px 4px 0px rgba(0, 196, 161, 0.5);
@@ -1141,10 +1149,11 @@ input {
 }
 
 .steepr-bottom-section {
-    padding: 16px;
+   /*  padding: 16px; */
     background-color: var(--bg-body);
     border-radius: 0px 0px 8px 8px;
-    height: calc(100vh - 121px);
+    /* height: calc(85vh - 100px); */
+    /* height: calc(100vh - 121px); */
 }
 
 .steepr-bottom-header {
@@ -1456,7 +1465,7 @@ header h1 {
 
 .steepr-bottom-section {
     overflow: auto;
-    max-width: 1000px;
+    /* max-width: 1000px; */
     margin: 0 auto;
 }
 
@@ -1589,7 +1598,7 @@ header h1 {
 }
 
 .steepr-bottom-body {
-    padding: 16px;
+    padding: 25px;
     /* overflow: auto; */
     display: flex;
     flex-direction: column;
@@ -1929,7 +1938,8 @@ hr {
 .cp-form-content-container {
     /* padding: 16px; */
     overflow: auto;
-    height: calc(100vh - 240px);
+        height: calc(100vh - 290px);
+   /*  height: calc(100vh - 240px); */
     background-color: #fafafa;
 }
 
@@ -2011,6 +2021,59 @@ input[type='checkbox'] {
 
 .user-footer .trans-bttn {
     color: var(--primary-blue);
+}
+.form-shipping {
+    padding: 10px;
+    margin-left: 7px;
+    display: flex;
+    align-items: center;
+}
+
+.search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent; /* no visible background */
+  z-index: 10;
+}
+
+.filter_list {
+  position: absolute;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #ddd;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 11; /* above overlay */
+}
+
+/* for paginate 1-5 */
+.step-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  color: #000;
+  font-weight: 600;
+  z-index: 2;
+  position: relative;
+}
+
+/* Completed step circle */
+.completed-step .step-count {
+  background: #22c55e;
+  color: #fff;
+}
+
+/* Active step circle */
+.present-step .step-count {
+  background: #2563eb;
+  color: #fff;
 }
 
 /*****************************S-CSS end******************************************************/

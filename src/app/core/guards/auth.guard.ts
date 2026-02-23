@@ -69,7 +69,7 @@ export class AuthGuard implements CanActivate {
         token: body.access_token,
         refToken: body.refresh_token
       }
-      
+      this.utils.setAccessToken(body?.access_token.toString());
       await this.utils.setLoginDetails(details);
       await this.getAccounts();
       await this.getUserDetails();
@@ -97,7 +97,7 @@ export class AuthGuard implements CanActivate {
       const response: any = await this.shared.getAccounts();
       if (response?.body) {
         let details: any = await this.utils.getLoginDetails();
-        details.processes = response?.body[0]?.projects[0]?.processes;
+        details.processes = response.body.data[0].projects[0].processes;
         this.utils.removeItemByKey('wmLgDtls');
         await this.utils.setLoginDetails(details);
       }

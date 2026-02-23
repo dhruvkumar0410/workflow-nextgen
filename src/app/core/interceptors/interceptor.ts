@@ -1,60 +1,65 @@
 import { inject, Injector } from '@angular/core';
-import { HttpRequest, HttpResponse, HttpInterceptorFn } from '@angular/common/http';
+import { HttpRequest, HttpResponse, HttpInterceptorFn, HttpEvent } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '@environment';
 
-import { catchError, from, map, of, switchMap, throwError } from 'rxjs';
+import { from, Observable, of, throwError } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 import { AuthService } from '../guards/auth.service';
-import { IAPIOptions } from '../encryption/custom.strategy';
 import { EncryptionService } from '../encryption/encryption.service';
-
 import { Utils } from '../utils/utils';
 
 export const requestInterceptor: HttpInterceptorFn = (req, next) => {
-
   const router = inject(Router);
   const authService = inject(AuthService);
   const encryptionService = inject(EncryptionService);
   const utils = inject(Utils);
-  
-  let modifiedReq = req;
 
   // /* -----------------------------------------
   //   1. Inject Authorization token
   // ----------------------------------------- */
-  const token: any = utils.getAccessToken();
-  if (token && (environment.encryptionMethod !== 'CUSTOM'
-    || (environment.encryptionMethod === 'CUSTOM'
-      && !isIAPIOptions(modifiedReq.body) && !isBypass(modifiedReq)))) {
-    modifiedReq = modifiedReq.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-  }
+  return from(utils.getAccessToken()).pipe(
+    switchMap((token: string | null): Observable<HttpEvent<any>> => {
+      let modifiedReq = req;
 
-  // /* -----------------------------------------
-  //   2. Encrypt request body (BODY ONLY)
-  // ----------------------------------------- */
-  if (environment.requestEncryption && !isBypass(modifiedReq)) {
-    return from(encryptionService.encrypt(modifiedReq.body)).pipe(
-      switchMap(encryptedBody => {
-        const encryptedReq = modifiedReq.clone({
-          body: encryptedBody,
-          headers: modifiedReq.headers.set('Content-Type', 'text/plain')
+      if (token && (environment.encryptionMethod !== 'CUSTOM'
+        || (environment.encryptionMethod === 'CUSTOM' && modifiedReq.body && typeof modifiedReq.body === 'object'))) {
+        const currentBody = modifiedReq.body as any;
+
+        modifiedReq = modifiedReq.clone({
+          body: {
+            ...currentBody,
+            Headers: {
+              ...(currentBody.Headers || {}),
+              Authorization: `Bearer ${token}`
+            }
+          }
         });
+      }
 
-        return handleResponse(encryptedReq, next, router, authService, encryptionService);
-      })
-    );
-  }
+    // /* -----------------------------------------
+    //   2. Encrypt request body (BODY ONLY)
+    // ----------------------------------------- */
+      if (environment.requestEncryption && !isBypass(modifiedReq) && modifiedReq.body) {
+        return from(encryptionService.encrypt(modifiedReq.body)).pipe(
+          switchMap((encryptedBody): Observable<HttpEvent<any>> => {
+            const encryptedReq = modifiedReq.clone({
+              body: encryptedBody,
+              headers: modifiedReq.headers.set('Content-Type', 'text/plain'),
+            });
+            return handleResponse(encryptedReq, next, router, authService, encryptionService);
+          }),
+        );
+      }
 
-  // /* -----------------------------------------
-  //   3. Plain request
-  // ----------------------------------------- */
-  return handleResponse(modifiedReq, next, router, authService, encryptionService);
-}
+    // /* -----------------------------------------
+    //   3. Plain request
+    // ----------------------------------------- */
+      return handleResponse(modifiedReq, next, router, authService, encryptionService);
+    }),
+  );
+};
 
 /* -----------------------------------------
   Centralized response + error handling
