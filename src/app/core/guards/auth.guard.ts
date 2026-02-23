@@ -26,11 +26,27 @@ export class AuthGuard implements CanActivate {
   ): Promise<boolean> {
 
     const routeId = next.paramMap.get('process_id');
-    const validId = (await this.utils.getDetailByKey('wmAccDtls'))?.[0]?.process_id?.toString();
-    if (validId && routeId !== validId) {
-      await this.router.navigate(['/process', validId]);
-      return false;
-    } 
+    if (routeId) {
+      const loginDetails: any = await this.utils.getLoginDetails();
+      const processes: any[] = loginDetails?.processes ?? [];
+
+      // If we have process data, ensure the requested process_id is valid.
+      if (processes.length > 0) {
+        const matchingProcess = processes.find(
+          (p: any) => p?.process_id?.toString() === routeId
+        );
+
+        if (!matchingProcess) {
+          const fallbackId = processes[0]?.process_id?.toString();
+          if (fallbackId) {
+            await this.router.navigate(['/process', fallbackId]);
+          } else {
+            await this.router.navigate(['/']);
+          }
+          return false;
+        }
+      }
+    }
 
     // Check if the user is authenticated
     const isAuthenticated = await this.authService.isAuthenticated();
@@ -83,7 +99,7 @@ export class AuthGuard implements CanActivate {
     try {
       const response: any = await this.shared.userDetail();
       if (response?.body) {
-        let details: any = await this.utils.getLoginDetails();
+        let details: any = (await this.utils.getLoginDetails()) || {};
         details.userDetails = response.body;
         this.utils.removeItemByKey('wmLgDtls');
         await this.utils.setLoginDetails(details);
@@ -96,8 +112,8 @@ export class AuthGuard implements CanActivate {
     try {
       const response: any = await this.shared.getAccounts();
       if (response?.body) {
-        let details: any = await this.utils.getLoginDetails();
-        details.processes = response.body.data[0].projects[0].processes;
+        let details: any = (await this.utils.getLoginDetails()) || {};
+        details.processes = response.body.data[0]?.projects[0]?.processes;
         this.utils.removeItemByKey('wmLgDtls');
         await this.utils.setLoginDetails(details);
       }

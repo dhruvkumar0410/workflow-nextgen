@@ -77,7 +77,7 @@ export class AuthService {
         loginDetails.token = body?.access_token;
         
         this.utils.removeItemByKey('wmLgDtls');
-        this.utils.setLoginDetails(loginDetails);
+        await this.utils.setLoginDetails(loginDetails);
         
         return body?.access_token;  
       }

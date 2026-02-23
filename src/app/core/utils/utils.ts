@@ -38,7 +38,7 @@ export class Utils {
 
     async getAccessToken() {
         const dtls: any = await this.getLoginDetails();
-        if (!dtls && !dtls?.token) return null;        
+        if (!dtls?.token) return null;        
         return dtls.token.toString();
     }
 

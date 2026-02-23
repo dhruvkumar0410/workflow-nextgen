@@ -24,7 +24,8 @@ export const requestInterceptor: HttpInterceptorFn = (req, next) => {
       let modifiedReq = req;
 
       if (token && (environment.encryptionMethod !== 'CUSTOM'
-        || (environment.encryptionMethod === 'CUSTOM' && modifiedReq.body && typeof modifiedReq.body === 'object'))) {
+        || (environment.encryptionMethod === 'CUSTOM' && !isBypass(modifiedReq)
+        && modifiedReq.body && typeof modifiedReq.body === 'object'))) {
         const currentBody = modifiedReq.body as any;
 
         modifiedReq = modifiedReq.clone({
